@@ -19,11 +19,15 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<UserResponseDTO> signup(@RequestBody @Valid UserRequestDTO userRequest){
         UserResponseDTO userResponse= userService.createUser(userRequest);
         return ResponseEntity.ok(userResponse);
     }
 
-
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody @Valid UserRequestDTO userRequest){
+        String token= userService.handleLogin(userRequest);
+        return ResponseEntity.ok(token);
+    }
 }
