@@ -15,8 +15,12 @@ public class Attribute {
     @Column(nullable = false)
     private String name;
 
+    @Enumerated(EnumType.ORDINAL)
     private AttributeType type;
 
+    @ElementCollection
+    @CollectionTable(name = "attribute_values", joinColumns = @JoinColumn(name = "attribute_id"))
+    @Column(name = "value")
     private List<String> val;
 
     @ManyToOne
@@ -51,7 +55,6 @@ public class Attribute {
         this.type = type;
         this.val = val;
     }
-
 
     public Attribute() {
     }

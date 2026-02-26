@@ -1,5 +1,6 @@
 package com.example.jwt.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -13,6 +14,8 @@ public class SubCategory {
     @Column(nullable = false)
     private String name;
 
+
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "category_id",nullable = false)
     private Category category;
