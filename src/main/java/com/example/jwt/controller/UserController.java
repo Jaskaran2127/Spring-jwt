@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/auth")
 public class UserController {
@@ -26,8 +29,10 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody @Valid UserRequestDTO userRequest){
+    public ResponseEntity<Map<String ,String>> login(@RequestBody @Valid UserRequestDTO userRequest){
         String token= userService.handleLogin(userRequest);
-        return ResponseEntity.ok(token);
+        Map <String,String> responseMap = new HashMap<>();
+        responseMap.put("token",token);
+        return ResponseEntity.ok(responseMap);
     }
 }

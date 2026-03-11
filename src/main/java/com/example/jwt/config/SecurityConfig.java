@@ -1,5 +1,6 @@
 package com.example.jwt.config;
 
+import com.example.jwt.filter.CorsFilter;
 import com.example.jwt.filter.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +21,9 @@ public class SecurityConfig {
     @Autowired
     private JwtFilter jwtFilter;
 
+    @Autowired
+    CorsFilter customCorsConfiguration;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -29,7 +33,7 @@ public class SecurityConfig {
                         .requestMatchers("/test-two").hasRole("USER")
                         .requestMatchers("/test").hasRole("ADMIN")
                         .anyRequest().authenticated()
-                ).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                ).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).cors(c -> c.configurationSource(customCorsConfiguration));
 
         return http.build();
     }
